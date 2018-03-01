@@ -9,7 +9,7 @@ def mvn(def args) {
 
 podTemplate(label: 'test', containers: [
   containerTemplate(name: 'jnlp', image: 'jenkins/jnlp-slave:latest', args: '${computer.jnlpmac} ${computer.name}'),
-  containerTemplate(name: 'maven', image: 'maven:3.5.0-jdk-8-alpine', ttyEnabled: true, command: 'cat')
+  containerTemplate(name: 'maven', image: 'maven:3.5.0-jdk-8', ttyEnabled: true, command: 'cat')
   ],
   volumes: [
   hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
@@ -27,6 +27,6 @@ podTemplate(label: 'test', containers: [
         stage('Integration Test') {
           mvn 'verify -DskipUnitTests -Parq-wildfly-swarm '
         }
+      }
     }
-   }
 }
