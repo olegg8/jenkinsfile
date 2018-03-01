@@ -26,6 +26,7 @@ podTemplate(label: 'test', containers: [
 
         stage('Integration Test') {
           container('maven') {
+            sh "WILDFLY_HOME/bin/standalone.sh"
             sh "mvn verify -DskipUnitTests=true -Parq-wildfly-swarm"
           }
         }
