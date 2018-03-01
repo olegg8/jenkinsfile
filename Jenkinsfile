@@ -7,12 +7,13 @@ podTemplate(label: 'test', containers: [
 ]) {
     node('test') {
 
+      def myRepo = git branch: '3-declarative',
+        credentialsId: '3d11bf3a-974e-46e9-9bf9-872734a65798',
+        url: 'git@github.com:AlexandrSemak/jenkinsfile.git'
+
       container('maven') {
-        stage('Checkout') {
-          def myRepo = git branch: '3-declarative',
-            credentialsId: '3d11bf3a-974e-46e9-9bf9-872734a65798',
-            url: 'git@github.com:AlexandrSemak/jenkinsfile.git'
-        }
+        //stage('Checkout') {
+        //}
         stage('Build') {
           sh "mvn clean install -DskipTests"
         }
