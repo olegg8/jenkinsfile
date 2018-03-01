@@ -6,10 +6,13 @@ podTemplate(label: 'test', containers: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
 ]) {
     node('test') {
+
+      checkout scm
+
       container('maven') {
-        stage('Checkout') {
-          checkout scm
-        }
+        //stage('Checkout') {
+          //checkout scm
+        //}
         stage('Build') {
           sh "mvn clean install -DskipTests"
         }
