@@ -1,26 +1,23 @@
 
     node {
-    stages {
-        stage('Build') {
-            steps {
-                mvn 'clean install -DskipTests'
-            }
-        }
+      stage('Build') {
+        steps {
+          mvn 'clean install -DskipTests'
+        } 
+      }
 
-        stage('Unit Test') {
-            steps {
-                mvn 'test'
-
-            }
+      stage('Unit Test') {
+        steps {
+          mvn 'test'
         }
+      }
 
-        stage('Integration Test') {
-            steps {
-                mvn 'verify -DskipUnitTests -Parq-wildfly-swarm '
-            }
+      stage('Integration Test') {
+        steps {
+          mvn 'verify -DskipUnitTests -Parq-wildfly-swarm '
         }
+      }
     }
-}
 
 def mvn(def args) {
     def mvnHome = tool 'M3'
