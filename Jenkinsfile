@@ -1,5 +1,5 @@
 def mvn(def args) {
-    def mvnHome = tool 'M3'
+    def mvnHome = tool 'M2'
     def javaHome = tool 'JDK8'
 
     withEnv(["JAVA_HOME=${javaHome}", "PATH+MAVEN=${mvnHome}/bin:${env.JAVA_HOME}/bin"]) {
