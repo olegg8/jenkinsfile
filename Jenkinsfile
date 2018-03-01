@@ -7,6 +7,9 @@ podTemplate(label: 'test', containers: [
 ]) {
     node('test') {
       container('maven') {
+        stage('Checkout') {
+          checkout scm
+        }
         stage('Build') {
           sh "mvn clean install -DskipTests"
         }
