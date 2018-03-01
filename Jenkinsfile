@@ -31,4 +31,3 @@ podTemplate(label: 'test', containers: [
         }
       }
     }
-}
