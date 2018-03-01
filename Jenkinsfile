@@ -7,7 +7,9 @@ podTemplate(label: 'test', containers: [
 ]) {
     node('test') {
 
-      checkout scm
+      git branch: '3-declarative',
+          credentialsId: '3d11bf3a-974e-46e9-9bf9-872734a65798',
+          url: 'git@github.com:AlexandrSemak/jenkinsfile.git'
 
       container('maven') {
         //stage('Checkout') {
