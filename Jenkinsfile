@@ -1,5 +1,5 @@
-pipeline {
-    agent any
+
+    node{
 
     stages {
         stage('Build') {
@@ -21,7 +21,6 @@ pipeline {
             }
         }
     }
-}
 
 def mvn(def args) {
     def mvnHome = tool 'M3'
@@ -30,4 +29,5 @@ def mvn(def args) {
     withEnv(["JAVA_HOME=${javaHome}", "PATH+MAVEN=${mvnHome}/bin:${env.JAVA_HOME}/bin"]) {
         sh "${mvnHome}/bin/mvn ${args} --batch-mode -V -U -e -Dsurefire.useFile=false"
     }
+}
 }
