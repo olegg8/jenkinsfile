@@ -1,3 +1,12 @@
+def mvn(def args) {
+    def mvnHome = tool 'M3'
+    def javaHome = tool 'JDK8'
+
+    withEnv(["JAVA_HOME=${javaHome}", "PATH+MAVEN=${mvnHome}/bin:${env.JAVA_HOME}/bin"]) {
+        sh "${mvnHome}/bin/mvn ${args} --batch-mode -V -U -e -Dsurefire.useFile=false"
+    }
+}
+
 podTemplate(label: 'test', containers: [
   containerTemplate(name: 'jnlp', image: 'jenkins/jnlp-slave:latest', args: '${computer.jnlpmac} ${computer.name}'),
   containerTemplate(name: 'maven', image: 'maven:3.5.0-jdk-8-alpine', ttyEnabled: true, command: 'cat')
@@ -18,15 +27,6 @@ podTemplate(label: 'test', containers: [
         stage('Integration Test') {
           mvn 'verify -DskipUnitTests -Parq-wildfly-swarm '
         }
-
-def mvn(def args) {
-    def mvnHome = tool 'M3'
-    def javaHome = tool 'JDK8'
-
-    withEnv(["JAVA_HOME=${javaHome}", "PATH+MAVEN=${mvnHome}/bin:${env.JAVA_HOME}/bin"]) {
-        sh "${mvnHome}/bin/mvn ${args} --batch-mode -V -U -e -Dsurefire.useFile=false"
-    }
-    }
     }
    }
 }
