@@ -1,5 +1,12 @@
-
-    node {
+podTemplate(label: 'test', containers: [
+  containerTemplate(name: 'jnlp', image: 'jenkins/jnlp-slave:latest', args: '${computer.jnlpmac} ${computer.name}'),
+  containerTemplate(name: 'maven', image: 'maven:3.5.0-jdk-8-alpine', ttyEnabled: true, command: 'cat')
+  ],
+  volumes: [
+  hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
+]) {
+    node('test') {
+      container {
       stage('Build') {
           mvn 'clean install -DskipTests'
       }
@@ -20,4 +27,6 @@ def mvn(def args) {
     withEnv(["JAVA_HOME=${javaHome}", "PATH+MAVEN=${mvnHome}/bin:${env.JAVA_HOME}/bin"]) {
         sh "${mvnHome}/bin/mvn ${args} --batch-mode -V -U -e -Dsurefire.useFile=false"
     }
+}
+}
 }
