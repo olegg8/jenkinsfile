@@ -11,19 +11,23 @@ podTemplate(label: 'test', containers: [
         credentialsId: '3d11bf3a-974e-46e9-9bf9-872734a65798',
         url: 'git@github.com:AlexandrSemak/jenkinsfile.git'
 
-      container('maven') {
-        //stage('Checkout') {
-        //}
+
         stage('Build') {
-          sh "mvn clean install -DskipTests"
+          container('maven') {
+            sh "mvn clean install -DskipTests"
+          }
         }
 
         stage('Unit Test') {
-          sh "mvn test"
+          container('maven') {
+            sh "mvn test"
+          }
         }
 
         stage('Integration Test') {
-          sh "mvn verify -DskipUnitTests -Parq-wildfly-swarm"
+          container('maven') {
+            sh "mvn verify -DskipUnitTests -Parq-wildfly-swarm"
+          }
         }
       }
     }
